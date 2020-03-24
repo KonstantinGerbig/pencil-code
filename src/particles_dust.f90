@@ -1001,7 +1001,7 @@ module Particles
 !
 !  29-dec-04/anders: coded
 !
-      use Density, only: beta_glnrho_global
+      use Density, only: beta_glnrho_global, lkonstiflag
       use EquationOfState, only: cs20, rho0
       use General, only: random_number_wrapper, normal_deviate
       use Mpicomm, only: mpireduce_sum, mpibcast_real
@@ -1953,9 +1953,22 @@ module Particles
                   f(l,m,n,iux) = f(l,m,n,iux) - &
                       beta_glnrho_global(1)*eps*Omega*tausp/ &
                       ((1.0+eps)**2+(Omega*tausp)**2)*cs
-                  f(l,m,n,iuy) = f(l,m,n,iuy) + &
+!
+                  if (.not. lkonstiflag) then
+                    f(l,m,n,iuy) = f(l,m,n,iuy) + &
                       beta_glnrho_global(1)*(1+eps+(Omega*tausp)**2)/ &
                       (2*((1.0+eps)**2+(Omega*tausp)**2))*cs
+! Introduces an additional z dependent radial pressure gradient
+! Leads to radial shear in azimuthal gas velocity and to VSI
+! See e.g., Nelson, Gressel, Umurhan (2013) Eq. 13
+                  else
+                    f(l,m,n,iuy) = f(l,m,n,iuy) + &
+                      beta_glnrho_global(1)*(1+eps+(Omega*tausp)**2)/ &
+                      (2*((1.0+eps)**2+(Omega*tausp)**2))*cs* &
+                      sqrt(1-((cs/(Omega*beta_glnrho_global(1)))/ &
+                      sqrt((cs/(Omega*beta_glnrho_global(1)))**2+ &
+                      z(n)**2)))
+                  endif
 !
                 enddo
               enddo
