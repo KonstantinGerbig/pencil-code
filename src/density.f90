@@ -131,6 +131,7 @@ module Density
   logical :: ldensity_slope_limited=.false.
   real :: h_slope_limited=0., chi_sld_thresh=0.
   character (len=labellen) :: islope_limiter=''
+  logical :: lkonstiflag=.false.
   real, dimension(3) :: beta_glnrho_global=0.0, beta_glnrho_scaled=0.0
 !
   namelist /density_init_pars/ &
@@ -151,7 +152,7 @@ module Density
       lreduced_sound_speed, lrelativistic_eos, &
       lscale_to_cs2top, density_zaver_range, &
       ieos_profile, width_eos_prof, &
-      lconserve_total_mass, total_mass, ireference_state, lrho_flucz_as_aux
+      lconserve_total_mass, total_mass, ireference_state, lrho_flucz_as_aux, lkonstiflag
 !
   namelist /density_run_pars/ &
       cdiffrho, diffrho, diffrho_hyper3, diffrho_hyper3_mesh, diffrho_shock, &
@@ -174,7 +175,7 @@ module Density
       lconserve_total_mass, total_mass, density_ceiling, &
       lreinitialize_lnrho, lreinitialize_rho, initlnrho, rescale_rho,&
       lsubtract_init_stratification, ireference_state, ldensity_slope_limited, &
-      h_slope_limited, chi_sld_thresh, islope_limiter, lrho_flucz_as_aux
+      h_slope_limited, chi_sld_thresh, islope_limiter, lrho_flucz_as_aux, lkonstiflag
 !
 !  Diagnostic variables (need to be consistent with reset list below).
 !
