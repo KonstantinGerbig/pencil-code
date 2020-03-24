@@ -23,3 +23,4 @@
 !
   public :: lnrhomz,glnrhomz,lcalc_lnrhomean,lcalc_glnrhomean,lupw_lnrho
   public :: beta_glnrho_global,beta_glnrho_scaled
+  public :: lkonstiflag
