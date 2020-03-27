@@ -120,6 +120,12 @@ module Shear
       endif
 !
       uy0 = Sshear * (x(l1:l2) - x0_shear)
+      
+!     uy0 = Sshear * (x(l1:l2) - x0_shear)
+!     z(l1:l2)
+!     sqrt(1-((cs/(Omega*beta_glnrho_global(1)))/ &
+!                      sqrt((cs/(Omega*beta_glnrho_global(1)))**2+ &
+!                      z(n)**2)))
 !
       if (lroot .and. ip<=12) then
         print*, 'initialize_shear: Sshear,Sshear1=', Sshear, Sshear1
